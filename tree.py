@@ -58,10 +58,6 @@ if __name__ == "__main__":
     if len(argv) <= 1:
         tree(pwd)
     else:
-        if argv[1].startswith('/'):
-            pwd = argv[1]
-            tree(pwd)
-        else:
-            # join the paths pwd and the given relative one in the arg
-            pwd = join(pwd, argv[1])
-            tree(pwd)
+        # join the paths pwd and the given relative one in the arg
+        pwd = join(pwd, argv[1])
+        tree(pwd)
