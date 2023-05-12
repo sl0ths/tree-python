@@ -1,8 +1,8 @@
 #!/usr/bin/python3
+from os.path import exists, join
 from subprocess import check_output
+from sys import argv
 
-
-pwd = str(check_output('pwd'))[2:-3]
 
 v_pipe = '│'
 mid_node = '├'
@@ -29,7 +29,10 @@ def printarr(array):
     print(" ", end='')
 
 
-def tree(pwd=pwd, arr=[]):
+def tree(pwd, arr=[]):
+    if not exists(pwd):
+        print("path doesn't exist")
+        return
     ls = parse_ls(pwd)
     lslen = len(ls)
     arr += [[mid_node, h_pipe]]
@@ -44,12 +47,21 @@ def tree(pwd=pwd, arr=[]):
             printarr(arr)
             print(ls[i][1])
             if i < lslen-1:
-                tree(pwd + '/' + ls[i][1], arr[:-1] + [[v_pipe, '   ']])
+                tree(pwd + '/' + ls[i][1], arr[:-1] + [[v_pipe, "   "]])
             else:
-                tree(pwd + '/' + ls[i][1], arr[:-1] + [[" ", '   ']])
+                tree(pwd + '/' + ls[i][1], arr[:-1] + [[" ", "   "]])
 
-
-print('.')
 
 if __name__ == "__main__":
-    tree()
+    print('.')
+    pwd = str(check_output('pwd'))[2:-3]
+    if len(argv) <= 1:
+        tree(pwd)
+    else:
+        if argv[1].startswith('/'):
+            pwd = argv[1]
+            tree(pwd)
+        else:
+            # join the paths pwd and the given relative one in the arg
+            pwd = join(pwd, argv[1])
+            tree(pwd)
