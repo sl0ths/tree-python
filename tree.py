@@ -62,3 +62,4 @@ if __name__ == "__main__":
     else:
         # join the paths pwd and the given relative one in the arg
         pwd = join(pwd, argv[1])
+        tree(pwd)
