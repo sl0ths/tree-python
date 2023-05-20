@@ -15,6 +15,7 @@ class flag:
     all = False
     gitignore = False
     sortbyname = False
+    reverse = False
     help = False
 
     def __init__(self, **kwargs):
@@ -68,7 +69,10 @@ def tree(pwd, flags: flag):
         ls = parse_ls(pwd, flags)
         if flags.sortbyname:
              # sort list by name
-             ls = sorted(ls, key=lambda x: x[1])
+             if flags.reverse:
+                  ls = sorted(ls, key=lambda x: x[1], reverse=True)
+              else:
+                  ls = sorted(ls, key=lambda x: x[1])
         lslen = len(ls)
         arr += [[mid_node, h_pipe]]
 
@@ -89,7 +93,7 @@ def tree(pwd, flags: flag):
 
 
 def parse_args(argv: list, pwd: str):
-    all, gitignore, help, sortbyname = False, False, False, False
+    all, gitignore, help, sortbyname, reverse = False, False, False, False, False
     is_pwd_set = False
     if len(argv) <= 1:
         pass
@@ -101,15 +105,17 @@ def parse_args(argv: list, pwd: str):
                     all = True
                 elif arg == 'gitignore' or arg == '-gitignore':
                     gitignore = True
-                    elif arg == 'sn' or arg == '-sortbyname':
+                elif arg == 'sn' or arg == '-sortbyname':
                      sortbyname = True
+                elif arg == 'r' or arg == '-reverse':
+                      reverse = True
                 else:
                     help = True
             else:
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse)
     return (flags, pwd)
 
 
