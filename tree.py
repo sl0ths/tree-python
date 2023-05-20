@@ -14,6 +14,7 @@ h_pipe = '──'
 class flag:
     all = False
     gitignore = False
+    sortbyname = False
     help = False
 
     def __init__(self, **kwargs):
@@ -65,6 +66,9 @@ def tree(pwd, flags: flag):
             print("path doesn't exist")
             return
         ls = parse_ls(pwd, flags)
+        if flags.sortbyname:
+             # sort list by name
+             ls = sorted(ls, key=lambda x: x[1])
         lslen = len(ls)
         arr += [[mid_node, h_pipe]]
 
@@ -85,7 +89,7 @@ def tree(pwd, flags: flag):
 
 
 def parse_args(argv: list, pwd: str):
-    all, gitignore, help = False, False, False
+    all, gitignore, help, sortbyname = False, False, False, False
     is_pwd_set = False
     if len(argv) <= 1:
         pass
@@ -97,13 +101,15 @@ def parse_args(argv: list, pwd: str):
                     all = True
                 elif arg == 'gitignore' or arg == '-gitignore':
                     gitignore = True
+                    elif arg == 'sn' or arg == '-sortbyname':
+                     sortbyname = True
                 else:
                     help = True
             else:
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, help=help)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help)
     return (flags, pwd)
 
 
