@@ -18,6 +18,7 @@ class flag:
     help = False
     directories_only = False
     files_only = False
+    filesfirst = False
     depth = 0
 
     def __init__(self, **kwargs):
@@ -167,7 +168,7 @@ Options:
   -r,  --reverse            Sort files by name in reverse.
   -fo, --filesonly          Only show files.
   -do, --directoriesonly    Only show directories
-  -L level                  Max depth reached.
+  -L                        Max depth the directory tree reaches.
   -h,  --help               Show this help message and exit.
 
   All Rights Reserved
