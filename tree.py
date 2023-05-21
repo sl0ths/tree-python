@@ -18,6 +18,7 @@ class flag:
     help = False
     directories_only = False
     files_only = False
+    filesfirst = False
 
     def __init__(self, **kwargs):
         """Sets all values once given
@@ -40,19 +41,29 @@ class flag:
 # returns a 2d list of the form [[{is it a directory?}, name],...]
 def parse_ls(pwd, flag):
     ls = []
+    dirs = []
+    files = []
 
     for (_, dirnames, filenames) in walk(pwd):
         # TODO gitignore
         if not flag.files_only:
-            ls.extend([[False, dir] for dir in dirnames
-                       if flag.all or not dir.__str__().startswith('.')])
-          # TODO gitignore
+           dirs = [[False, dir] for dir in dirnames
+                        if flag.all or not dir.__str__().startswith('.')]
+          
+        # TODO gitignore
         if not flag.directories_only:
-            ls.extend([[True, file] for file in filenames
-                       if flag.all or not file.__str__().startswith('.')])
+            files = [[True, file] for file in filenames
+                        if flag.all or not file.__str__().startswith('.')]
         # breaks the walk from yeilding other directory contents...
         # we might actually use this to make the whole tool
         break
+        
+    if flag.filesfirst:
+        ls.extend(files)
+        ls.extend(dirs)
+    else:
+        ls.extend(dirs)
+        ls.extend(files)
 
     return ls
 
@@ -93,7 +104,7 @@ def tree(pwd, flags: flag):
 
 
 def parse_args(argv: list, pwd: str):
-    all, gitignore, help, sortbyname, reverse, files_only, directories_only = False, False, False, False, False, False, False
+    all, gitignore, help, sortbyname, reverse, files_only, directories_only, filesfirst = False, False, False, False, False, False, False, False
     is_pwd_set = False
     if len(argv) <= 1:
         pass
