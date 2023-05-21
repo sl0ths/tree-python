@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from os.path import exists, join
-from os import walk
+from os import walk, getcwd
 from subprocess import check_output
 from sys import argv
 from dataclasses import dataclass
@@ -91,6 +91,7 @@ def tree(pwd, flags: flag):
         if not exists(pwd):
             print("path doesn't exist")
             return
+
         ls = parse_ls(pwd, flags)
         if flags.sortbyname:
             # sort list by name
@@ -98,10 +99,12 @@ def tree(pwd, flags: flag):
                 ls = sorted(ls, key=lambda x: x[1], reverse=True)
             else:
                 ls = sorted(ls, key=lambda x: x[1])
+
         lslen = len(ls)
         arr += [[mid_node, h_pipe]]
 
         depth += 1
+
         for i in range(lslen):
             if i >= lslen-1:
                 arr[-1][0] = final_node
@@ -197,7 +200,7 @@ Options:
 
 
 if __name__ == "__main__":
-    pwd = str(check_output('pwd'))[2:-3]
+    pwd = getcwd()
     (flags, pwd) = parse_args(argv, pwd)
 
     tree(pwd, flags)
