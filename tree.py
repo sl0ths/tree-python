@@ -65,6 +65,32 @@ def printarr(array):
 
 
 def tree(pwd, flags: flag):
+    if flags.help:
+         # basic help prinitng here
+         print(r"""
+
+                                         
+                                         
+                                        
+    #                                    
+   ##                                    
+   ##                                    
+ ######## ###  /###     /##       /##    
+########   ###/ #### / / ###     / ###   
+   ##       ##   ###/ /   ###   /   ###  
+   ##       ##       ##    ### ##    ### 
+   ##       ##       ########  ########  
+   ##       ##       #######   #######   
+   ##       ##       ##        ##        
+   ##       ##       ####    / ####    / 
+   ##       ###       ######/   ######/  
+    ##       ###       #####     #####   
+                                         
+                                         
+                                         
+          """)
+         return
+     print('.')
     def _tree(pwd, arr):
         if not exists(pwd):
             print("path doesn't exist")
@@ -103,6 +129,8 @@ def parse_args(argv: list, pwd: str):
                 arg = arg[1:]
                 if arg == 'a' or arg == '-all':
                     all = True
+                    elif arg == 'h' or arg == '-help':
+                          help = True
                 elif arg == 'gitignore' or arg == '-gitignore':
                     gitignore = True
                 elif arg == 'sn' or arg == '-sortbyname':
@@ -124,7 +152,6 @@ def parse_args(argv: list, pwd: str):
 
 
 if __name__ == "__main__":
-    print('.')
     pwd = str(check_output('pwd'))[2:-3]
     (flags, pwd) = parse_args(argv, pwd)
 
