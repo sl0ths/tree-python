@@ -1,3 +1,25 @@
+"""
+Usage: tree.py [options] [directory]
+
+Options:
+  -a,  --all                Include hidden files
+  -gitignore                Exclude files listed in .gitignore.
+  -sn, --sortbyname         Sort files by name.
+  -r,  --reverse            Sort files by name in reverse.
+  -fo, --filesonly          Only show files.
+  -do, --dirsonly           Only show directories
+  -L                        Max depth the directory tree reaches.
+  -h,  --help               Show this help message and exit.
+
+  All Rights Reserved
+  If you have any questions, or you need help please contact the developers:
+    
+    
+    
+    
+    
+    
+"""
 #!/usr/bin/python3
 from os.path import exists, join
 from os import walk, getcwd
