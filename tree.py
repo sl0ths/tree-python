@@ -82,12 +82,10 @@ def parse_ls(pwd, flag):
     files = []
 
     for (_, dirnames, filenames) in walk(pwd):
-        # TODO gitignore
         if not flag.files_only:
             dirs = [[False, dir] for dir in dirnames
                     if flag.all or not dir.startswith('.')]
 
-        # TODO gitignore
         if not flag.dirs_only:
             files = [[True, file] for file in filenames
                      if flag.all or not file.startswith('.')]
