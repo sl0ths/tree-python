@@ -10,7 +10,6 @@ This is a reimplementation of the *tree* tool, using Python.
  u |_|U     |_| \_\    |_____|   |_____|  
  _// \\_    //   \\_   <<   >>   <<   >>  
 (__) (__)  (__)  (__) (__) (__) (__) (__) .py 
-```
 
 A tree(1) clone written in Python.
                                          
@@ -36,3 +35,4 @@ Options:
 
 
   All Rights Reserved
+  ```
