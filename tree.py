@@ -18,7 +18,6 @@ class flag:
     help = False
     directories_only = False
     files_only = False
-    filesfirst = False
     depth = 0
 
     def __init__(self, **kwargs):
@@ -132,18 +131,18 @@ def parse_args(argv: list, pwd: str):
                 elif arg == 'r' or arg == '-reverse':
                     reverse = True
                 elif arg == 'fo' or arg == '-filesonly':
+                    files_only = True
+                elif arg == 'do' or arg == '-directoriesonly':
                     directories_only = True
-                elif arg == '-filesfirst':
-                    filesfirst = True
                 elif arg.startswith('L'):  # this has to be used like this: tree -L5 with the number directly next to the arg no space
                     depth = int(arg[1:])
-                else:
+                elif arg == 'h' or arg == '-help':
                     help = True
             else:
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, directories_only=directories_only, filesfirst=filesfirst, depth=depth)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, directories_only=directories_only, depth=depth)
     return (flags, pwd)
 
 def print_help():
