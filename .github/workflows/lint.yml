@@ -25,4 +25,4 @@ jobs:
 
       - name: Run Linter check
         run: |
-          pylint **/*.py
+          pylint **/*.py ./*.py
