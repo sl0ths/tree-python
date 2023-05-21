@@ -10,6 +10,7 @@ class TestParseTree(unittest.TestCase):
     """
     Test Parse Tree
     """
+
     def test_parse_args_no_args(self):
         """
         test parse args no args
@@ -62,6 +63,51 @@ class TestParseTree(unittest.TestCase):
         pwd = ""
         result = tree.parse_args(argv, pwd)
         flags = tree.Flag(sortbyname=True)
+        wanted = (flags, "")
+        self.assertEqual(wanted, result)
+
+    def test_parse_args_sortbyname_reverse(self):
+        """
+        test parse args sortbyname in reverse
+        """
+        argv = ['tree.py', '-r']
+        pwd = ""
+        result = tree.parse_args(argv, pwd)
+        flags = tree.Flag(sortbyname=True, reverse=True)
+        wanted = (flags, "")
+        self.assertEqual(wanted, result)
+
+    def test_parse_args_files_only(self):
+        """
+        test parse args files only
+        """
+        argv = ['tree.py', '-fo']
+        pwd = ""
+        result = tree.parse_args(argv, pwd)
+        flags = tree.Flag(files_only=True)
+        wanted = (flags, "")
+        self.assertEqual(wanted, result)
+
+    def test_parse_args_dirsonly(self):
+        """
+        test parse args dirsonly
+        """
+        argv = ['tree.py', '-do']
+        pwd = ""
+        result = tree.parse_args(argv, pwd)
+        flags = tree.Flag(dirs_only=True)
+        wanted = (flags, "")
+        self.assertEqual(wanted, result)
+
+    def test_parse_args_depth(self):
+        """
+        test parse args depth
+        """
+        depth = 1
+        argv = ['tree.py', '-L'+str(depth)]
+        pwd = ""
+        result = tree.parse_args(argv, pwd)
+        flags = tree.Flag(depth=depth)
         wanted = (flags, "")
         self.assertEqual(wanted, result)
 
