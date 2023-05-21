@@ -36,7 +36,7 @@ H_PIPE = '──'
 @dataclass
 class Flag:
     """
-    Flag dataclass to hold the values of arguments 
+    Flag dataclass to hold the values of arguments
     passed by the user
     """
     all: bool = False

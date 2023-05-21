@@ -1,9 +1,10 @@
 """
-Testing parse args function 
+Testing parse args function
 """
 import unittest
 from os.path import join
 import tree
+
 
 class TestParseTree(unittest.TestCase):
     """
