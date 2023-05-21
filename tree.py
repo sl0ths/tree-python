@@ -82,13 +82,11 @@ def parse_ls(pwd, flag):
     files = []
 
     for (_, dirnames, filenames) in walk(pwd):
-        if not flag.files_only:
-            dirs = [[False, dir] for dir in dirnames
-                    if flag.all or not dir.startswith('.')]
+        dirs = [[False, dir] for dir in dirnames
+                if flag.all or not dir.startswith('.')]
 
-        if not flag.dirs_only:
-            files = [[True, file] for file in filenames
-                     if flag.all or not file.startswith('.')]
+        files = [[True, file] for file in filenames
+                 if flag.all or not file.startswith('.')]
         # breaks the walk from yeilding other directory contents...
         # we might actually use this to make the whole tool
         break
@@ -148,11 +146,13 @@ def tree(pwd, flags: Flag):
             if i >= lslen-1:
                 arr[-1][0] = FINAL_NODE
             if ls_arr[i][0]:  # is it a file?
-                printarr(arr)
-                print(ls_arr[i][1])
+                if not flags.dirs_only:
+                    printarr(arr)
+                    print(ls_arr[i][1])
             else:
-                printarr(arr)
-                print(ls_arr[i][1])
+                if not flags.files_only:
+                    printarr(arr)
+                    print(ls_arr[i][1])
                 if flags.depth == 0 or depth < flags.depth:
                     if i < lslen-1:
                         _tree(pwd + '/' + ls_arr[i][1],
