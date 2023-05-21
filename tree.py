@@ -35,7 +35,8 @@ class flag:
         """Disables setting attributes via
         item.prop = val or item['prop'] = val
         """
-        raise TypeError('Immutable objects cannot have properties set after init')
+        raise TypeError(
+            'Immutable objects cannot have properties set after init')
 
     def __delattr__(self, *args):
         """Disables deleting properties"""
@@ -51,17 +52,17 @@ def parse_ls(pwd, flag):
     for (_, dirnames, filenames) in walk(pwd):
         # TODO gitignore
         if not flag.files_only:
-           dirs = [[False, dir] for dir in dirnames
-                        if flag.all or not dir.__str__().startswith('.')]
-          
+            dirs = [[False, dir] for dir in dirnames
+                    if flag.all or not dir.__str__().startswith('.')]
+
         # TODO gitignore
         if not flag.dirs_only:
             files = [[True, file] for file in filenames
-                        if flag.all or not file.__str__().startswith('.')]
+                     if flag.all or not file.__str__().startswith('.')]
         # breaks the walk from yeilding other directory contents...
         # we might actually use this to make the whole tool
         break
-        
+
     if flag.filesfirst:
         ls.extend(files)
         ls.extend(dirs)
@@ -81,10 +82,11 @@ def printarr(array):
 
 def tree(pwd, flags: flag):
     if flags.help:
-         # basic help prinitng here
-         print_help()
-         return
+        # basic help prinitng here
+        print_help()
+        return
     print('.')
+
     def _tree(pwd, arr, depth):
         if not exists(pwd):
             print("path doesn't exist")
@@ -111,10 +113,12 @@ def tree(pwd, flags: flag):
                 print(ls[i][1])
                 if flags.depth == 0 or depth < flags.depth:
                     if i < lslen-1:
-                        _tree(pwd + '/' + ls[i][1], arr[:-1] + [[v_pipe, "   "]], depth)
+                        _tree(pwd + '/' + ls[i][1],
+                              arr[:-1] + [[v_pipe, "   "]], depth)
                     else:
-                        _tree(pwd + '/' + ls[i][1], arr[:-1] + [[" ", "   "]], depth)
-    _tree(pwd, [], depth = 0)
+                        _tree(pwd + '/' + ls[i][1],
+                              arr[:-1] + [[" ", "   "]], depth)
+    _tree(pwd, [], depth=0)
 
 
 def parse_args(argv: list, pwd: str):
@@ -141,7 +145,8 @@ def parse_args(argv: list, pwd: str):
                     files_only = True
                 elif arg == 'do' or arg == '-dirsonly':
                     dirs_only = True
-                elif arg.startswith('L'):  # this has to be used like this: tree -L5 with the number directly next to the arg no space
+                # this has to be used like this: tree -L5 with the number directly next to the arg no space
+                elif arg.startswith('L'):
                     depth = int(arg[1:])
                 elif arg == 'h' or arg == '-help':
                     help = True
@@ -149,22 +154,24 @@ def parse_args(argv: list, pwd: str):
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, dirs_only=dirs_only, depth=depth, filesfirst=filesfirst)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse,
+                 files_only=files_only, dirs_only=dirs_only, depth=depth, filesfirst=filesfirst)
     return (flags, pwd)
+
 
 def print_help():
     print(r"""
-                                  
-  _____      ____     U _____ u U _____ u 
- |_ " _|  U |  _"\ u  \| ___"|/ \| ___"|/ 
-   | |     \| |_) |/   |  _|"    |  _|"   
-  /| |\     |  _ <     | |___    | |___   
- u |_|U     |_| \_\    |_____|   |_____|  
- _// \\_    //   \\_   <<   >>   <<   >>  
-(__) (__)  (__)  (__) (__) (__) (__) (__) .py 
+
+  _____      ____     U _____ u U _____ u
+ |_ " _|  U |  _"\ u  \| ___"|/ \| ___"|/
+   | |     \| |_) |/   |  _|"    |  _|"
+  /| |\     |  _ <     | |___    | |___
+ u |_|U     |_| \_\    |_____|   |_____|
+ _// \\_    //   \\_   <<   >>   <<   >>
+(__) (__)  (__)  (__) (__) (__) (__) (__) .py
 
 A tree(1) clone written in Python.
-                                         
+
 Usage: tree.py [options] [directory]
 
 Options:
@@ -184,7 +191,7 @@ Options:
     Yassine Ibrahimi
     Abdellah Ouaggane
     Mouslim Mouden
-    Adam El Berdai 
+    Adam El Berdai
 """)
 
 
