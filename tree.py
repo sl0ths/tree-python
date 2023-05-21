@@ -17,7 +17,7 @@ class flag:
     sortbyname = False
     reverse = False
     help = False
-    directories_only = False
+    dirs_only = False
     files_only = False
     filesfirst = False
     depth = 0
@@ -53,7 +53,7 @@ def parse_ls(pwd, flag):
                         if flag.all or not dir.__str__().startswith('.')]
           
         # TODO gitignore
-        if not flag.directories_only:
+        if not flag.dirs_only:
             files = [[True, file] for file in filenames
                         if flag.all or not file.__str__().startswith('.')]
         # breaks the walk from yeilding other directory contents...
@@ -116,7 +116,7 @@ def tree(pwd, flags: flag):
 
 
 def parse_args(argv: list, pwd: str):
-    all, gitignore, help, sortbyname, reverse, files_only, directories_only, filesfirst = False, False, False, False, False, False, False, False
+    all, gitignore, help, sortbyname, reverse, files_only, dirs_only, filesfirst = False, False, False, False, False, False, False, False
     depth = 0
     is_pwd_set = False
     if len(argv) <= 1:
@@ -137,8 +137,8 @@ def parse_args(argv: list, pwd: str):
                     reverse = True
                 elif arg == 'fo' or arg == '-filesonly':
                     files_only = True
-                elif arg == 'do' or arg == '-directoriesonly':
-                    directories_only = True
+                elif arg == 'do' or arg == '-dirsonly':
+                    dirs_only = True
                 elif arg.startswith('L'):  # this has to be used like this: tree -L5 with the number directly next to the arg no space
                     depth = int(arg[1:])
                 elif arg == 'h' or arg == '-help':
@@ -147,7 +147,7 @@ def parse_args(argv: list, pwd: str):
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, directories_only=directories_only, depth=depth)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, dirs_only=dirs_only, depth=depth)
     return (flags, pwd)
 
 def print_help():
@@ -171,7 +171,7 @@ Options:
   -sn, --sortbyname         Sort files by name.
   -r,  --reverse            Sort files by name in reverse.
   -fo, --filesonly          Only show files.
-  -do, --directoriesonly    Only show directories
+  -do, --dirsonly           Only show directories
   -L                        Max depth the directory tree reaches.
   -h,  --help               Show this help message and exit.
 
