@@ -136,7 +136,7 @@ def parse_args(argv: list, pwd: str):
                     directories_only = True
                 elif arg.startswith('L'):  # this has to be used like this: tree -L5 with the number directly next to the arg no space
                     depth = int(arg[1:])
-                else:
+                elif arg == 'h' or arg == '-help':
                     help = True
             else:
                 if not is_pwd_set:
