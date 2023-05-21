@@ -65,6 +65,53 @@ class TestParseTree(unittest.TestCase):
         wanted = (flags, "")
         self.assertEqual(wanted, result)
 
+     def test_parse_args_sortbyname_reverse(self):
+        """
+        test parse args sortbyname in reverse
+        """
+        argv = ['tree.py', '-r']
+        # -, '-] removr  this i cant cuz phone
+        pwd = ""
+        result = tree.parse_args(argv, pwd)
+        flags = tree.Flag(sortbyname=True, reverse=True) 
+        #flags = tree.Flag()
+        wanted = (flags, "") 
+        self.assertEqual(wanted, result)
+
+     def test_parse_args_files_only(self):
+        """
+        test parse args files only
+        """
+        argv = ['tree.py', '-fo'] 
+        pwd = ""
+        results = tree.parse_args(argv, pwd)  
+        flags = tree.Flag(files_only=True)
+        wanted = (flags, "")
+        self.assertEqual(wanted, result)
+
+     def test_parse_args_dirsonly(self):
+        """
+        test parse args dirsonly
+        """
+        argv = ['tree.py', '-do'] 
+        pwd = ""  
+        results = tree.parse_args(argv, pwd)
+        flags = tree.Flag(dirs_only=True)
+        wanted = (flags, "")
+        self.assertEqual(wanted, result)
+
+     def test_parse_args_depth(self):
+        """
+        test parse args depth
+        """
+        depth = 1
+        argv = ['tree.py', '-L'+str(depth,)]   
+        pwd = ""
+        results =  tree.parse_args(argv, pwd)
+        flags = tree.Flag(depth=depth) # same here , 
+        wanted = (flags, "")
+
+
 
 if __name__ == '__main__':
     unittest.main()
