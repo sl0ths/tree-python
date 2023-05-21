@@ -3,6 +3,7 @@ from os.path import exists, join
 from os import walk
 from subprocess import check_output
 from sys import argv
+from dataclasses import dataclass
 
 
 v_pipe = '│'
@@ -11,16 +12,17 @@ final_node = '└'
 h_pipe = '──'
 
 
+@dataclass
 class flag:
-    all = False
-    gitignore = False
-    sortbyname = False
-    reverse = False
-    help = False
-    dirs_only = False
-    files_only = False
-    filesfirst = False
-    depth = 0
+    all: bool = False
+    gitignore: bool = False
+    sortbyname: bool = False
+    reverse: bool = False
+    help: bool = False
+    dirs_only: bool = False
+    files_only: bool = False
+    filesfirst: bool = False
+    depth: int = 0
 
     def __init__(self, **kwargs):
         """Sets all values once given
@@ -147,7 +149,7 @@ def parse_args(argv: list, pwd: str):
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, dirs_only=dirs_only, depth=depth)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, dirs_only=dirs_only, depth=depth, filesfirst=filesfirst)
     return (flags, pwd)
 
 def print_help():
