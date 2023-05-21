@@ -1,4 +1,4 @@
-name: Linting Checks
+name: Lint
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     types: [opened, reopened]
 
 jobs:
-  tests:
+  linters:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +23,6 @@ jobs:
       - name: Install requirement
         run: pip install pylint
 
-      - name: Run unit tests
+      - name: Run Linter check
         run: |
           pylint **/*.py
