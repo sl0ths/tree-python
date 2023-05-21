@@ -16,7 +16,7 @@ class TestParseTree(unittest.TestCase):
         argv = ['tree.py']
         pwd = ""
         result = tree.parse_args(argv, pwd)
-        flags = tree.flag()
+        flags = tree.Flag()
         wanted = (flags, "")
         self.assertEqual(wanted, result)
 
@@ -27,7 +27,7 @@ class TestParseTree(unittest.TestCase):
         argv = ['tree.py', "dir"]
         pwd = ""
         result = tree.parse_args(argv, pwd)
-        flags = tree.flag()
+        flags = tree.Flag()
         wanted = (flags, join(pwd, "dir"))
         self.assertEqual(wanted, result)
 
@@ -38,7 +38,7 @@ class TestParseTree(unittest.TestCase):
         argv = ['tree.py', "--gitignore"]
         pwd = ""
         result = tree.parse_args(argv, pwd)
-        flags = tree.flag(gitignore=True)
+        flags = tree.Flag(gitignore=True)
         wanted = (flags, "")
         self.assertEqual(wanted, result)
 
@@ -49,7 +49,7 @@ class TestParseTree(unittest.TestCase):
         argv = ['tree.py', "--all"]
         pwd = ""
         result = tree.parse_args(argv, pwd)
-        flags = tree.flag(all=True)
+        flags = tree.Flag(all=True)
         wanted = (flags, "")
         self.assertEqual(wanted, result)
 
@@ -60,7 +60,7 @@ class TestParseTree(unittest.TestCase):
         argv = ['tree.py', "--sortbyname"]
         pwd = ""
         result = tree.parse_args(argv, pwd)
-        flags = tree.flag(sortbyname=True)
+        flags = tree.Flag(sortbyname=True)
         wanted = (flags, "")
         self.assertEqual(wanted, result)
 
