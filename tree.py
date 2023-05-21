@@ -101,8 +101,11 @@ def parse_args(argv: list, pwd: str):
                     all = True
                 elif arg == 'gitignore' or arg == '-gitignore':
                     gitignore = True
-                    elif arg == 'sn' or arg == '-sortbyname':
-                     sortbyname = True
+                elif arg == 'sn' or arg == '-sortbyname':
+                    sortbyname = True
+                elif arg == 'h' or arg == '-help':  
+                    print_help()  
+                    exit(0)  
                 else:
                     help = True
             else:
@@ -111,6 +114,26 @@ def parse_args(argv: list, pwd: str):
                     is_pwd_set = True
     flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help)
     return (flags, pwd)
+
+def print_help():
+    print("""
+Usage: tree [options] [directory]
+Hello , this is a tree command for linux written in python3.
+how to use:
+Options:
+  -a, --all          Include hidden files.
+  -gitignore         Exclude files listed in .gitignore.
+  -sn, --sortbyname  Sort files by name.
+  -h, --help         Show this help message and exit.
+  All Rights Reserved 
+  If you have any questions, or youn need help please contact Devolopers.
+  Ahmed Merimi
+  Benlmoaujoud Mohamed
+  Yassin Ibrahimi
+  Abdullah Ouaggan
+  Moslim 
+  Adam El Berdai 
+""")
 
 
 if __name__ == "__main__":
