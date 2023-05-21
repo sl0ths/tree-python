@@ -148,14 +148,15 @@ def parse_args(argv: list, pwd: str):
                 # this has to be used like this: tree -L5 with the number directly next to the arg no space
                 elif arg.startswith('L'):
                     depth = int(arg[1:])
-                elif arg == 'h' or arg == '-help':
+                else:
                     help = True
             else:
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse,
-                 files_only=files_only, dirs_only=dirs_only, depth=depth, filesfirst=filesfirst)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname,
+                 help=help, reverse=reverse, files_only=files_only,
+                 dirs_only=dirs_only, depth=depth, filesfirst=filesfirst)
     return (flags, pwd)
 
 
