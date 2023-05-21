@@ -90,7 +90,7 @@ def tree(pwd, flags: flag):
                                          
           """)
          return
-     print('.')
+    print('.')
     def _tree(pwd, arr):
         if not exists(pwd):
             print("path doesn't exist")
@@ -129,8 +129,8 @@ def parse_args(argv: list, pwd: str):
                 arg = arg[1:]
                 if arg == 'a' or arg == '-all':
                     all = True
-                    elif arg == 'h' or arg == '-help':
-                          help = True
+                elif arg == 'h' or arg == '-help':
+                    help = True
                 elif arg == 'gitignore' or arg == '-gitignore':
                     gitignore = True
                 elif arg == 'sn' or arg == '-sortbyname':
