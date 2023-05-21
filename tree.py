@@ -16,6 +16,9 @@ class flag:
     gitignore = False
     sortbyname = False
     help = False
+    directories_only = False
+    files_only = False
+    filesfirst = False
 
     def __init__(self, **kwargs):
         """Sets all values once given
@@ -38,17 +41,29 @@ class flag:
 # returns a 2d list of the form [[{is it a directory?}, name],...]
 def parse_ls(pwd, flag):
     ls = []
+    dirs = []
+    files = []
 
     for (_, dirnames, filenames) in walk(pwd):
         # TODO gitignore
-        ls.extend([[False, dir] for dir in dirnames
-                   if flag.all or not dir.__str__().startswith('.')])
+        if not flag.files_only:
+           dirs = [[False, dir] for dir in dirnames
+                        if flag.all or not dir.__str__().startswith('.')]
+          
         # TODO gitignore
-        ls.extend([[True, file] for file in filenames
-                   if flag.all or not file.__str__().startswith('.')])
+        if not flag.directories_only:
+            files = [[True, file] for file in filenames
+                        if flag.all or not file.__str__().startswith('.')]
         # breaks the walk from yeilding other directory contents...
         # we might actually use this to make the whole tool
         break
+        
+    if flag.filesfirst:
+        ls.extend(files)
+        ls.extend(dirs)
+    else:
+        ls.extend(dirs)
+        ls.extend(files)
 
     return ls
 
@@ -61,6 +76,11 @@ def printarr(array):
 
 
 def tree(pwd, flags: flag):
+    if flags.help:
+         # basic help prinitng here
+         print_help()
+         return
+    print('.')
     def _tree(pwd, arr):
         if not exists(pwd):
             print("path doesn't exist")
@@ -89,7 +109,7 @@ def tree(pwd, flags: flag):
 
 
 def parse_args(argv: list, pwd: str):
-    all, gitignore, help, sortbyname = False, False, False, False
+    all, gitignore, help, sortbyname, reverse, files_only, directories_only, filesfirst = False, False, False, False, False, False, False, False
     is_pwd_set = False
     if len(argv) <= 1:
         pass
@@ -99,24 +119,46 @@ def parse_args(argv: list, pwd: str):
                 arg = arg[1:]
                 if arg == 'a' or arg == '-all':
                     all = True
+                elif arg == 'h' or arg == '-help':
+                    help = True
                 elif arg == 'gitignore' or arg == '-gitignore':
                     gitignore = True
                 elif arg == 'sn' or arg == '-sortbyname':
                     sortbyname = True
-                elif arg == 'h' or arg == '-help':  
-                    print_help()  
-                    exit(0)  
-                else:
+                elif arg == 'r' or arg == '-reverse':
+                    reverse = True
+                elif arg == 'fo' or arg == '-filesonly':
+                    files_only = True
+                elif arg == 'do' or arg == '-directoriesonly':
+                    directories_only = True
+                elif arg == 'h' or arg == '-help':
                     help = True
+                    exit(0)
             else:
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, directories_only=directories_only)
     return (flags, pwd)
 
 def print_help():
-    print("""
+    print(r"""
+                                  
+    #                                    
+   ##                                    
+   ##                                    
+ ######## ###  /###     /##       /##    
+########   ###/ #### / / ###     / ###   
+   ##       ##   ###/ /   ###   /   ###  
+   ##       ##       ##    ### ##    ### 
+   ##       ##       ########  ########  
+   ##       ##       #######   #######   
+   ##       ##       ##        ##        
+   ##       ##       ####    / ####    / 
+   ##       ###       ######/   ######/  
+    ##       ###       #####     #####   
+                                         
+                                         
 Usage: tree [options] [directory]
 Hello , this is a tree command for linux written in python3.
 how to use:
@@ -129,15 +171,14 @@ Options:
   If you have any questions, or youn need help please contact Devolopers.
   Ahmed Merimi
   Benlmoaujoud Mohamed
-  Yassin Ibrahimi
-  Abdullah Ouaggan
-  Moslim 
+  Yassine Ibrahimi
+  Abdullah Ouaggane
+  Mouslim Mouden
   Adam El Berdai 
 """)
 
 
 if __name__ == "__main__":
-    print('.')
     pwd = str(check_output('pwd'))[2:-3]
     (flags, pwd) = parse_args(argv, pwd)
 
