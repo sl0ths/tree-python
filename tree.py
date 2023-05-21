@@ -15,8 +15,9 @@ class flag:
     all = False
     gitignore = False
     sortbyname = False
-    reverse = False
     help = False
+    directories_only = False
+    files_only = False
 
     def __init__(self, **kwargs):
         """Sets all values once given
@@ -42,11 +43,13 @@ def parse_ls(pwd, flag):
 
     for (_, dirnames, filenames) in walk(pwd):
         # TODO gitignore
-        ls.extend([[False, dir] for dir in dirnames
-                   if flag.all or not dir.__str__().startswith('.')])
-        # TODO gitignore
-        ls.extend([[True, file] for file in filenames
-                   if flag.all or not file.__str__().startswith('.')])
+        if not flag.files_only:
+            ls.extend([[False, dir] for dir in dirnames
+                       if flag.all or not dir.__str__().startswith('.')])
+          # TODO gitignore
+        if not flag.directories_only:
+            ls.extend([[True, file] for file in filenames
+                       if flag.all or not file.__str__().startswith('.')])
         # breaks the walk from yeilding other directory contents...
         # we might actually use this to make the whole tool
         break
@@ -69,10 +72,7 @@ def tree(pwd, flags: flag):
         ls = parse_ls(pwd, flags)
         if flags.sortbyname:
              # sort list by name
-             if flags.reverse:
-                  ls = sorted(ls, key=lambda x: x[1], reverse=True)
-              else:
-                  ls = sorted(ls, key=lambda x: x[1])
+             ls = sorted(ls, key=lambda x: x[1])
         lslen = len(ls)
         arr += [[mid_node, h_pipe]]
 
@@ -93,7 +93,7 @@ def tree(pwd, flags: flag):
 
 
 def parse_args(argv: list, pwd: str):
-    all, gitignore, help, sortbyname, reverse = False, False, False, False, False
+    all, gitignore, help, sortbyname, reverse, files_only, directories_only = False, False, False, False, False, False, False
     is_pwd_set = False
     if len(argv) <= 1:
         pass
@@ -106,16 +106,20 @@ def parse_args(argv: list, pwd: str):
                 elif arg == 'gitignore' or arg == '-gitignore':
                     gitignore = True
                 elif arg == 'sn' or arg == '-sortbyname':
-                     sortbyname = True
+                    sortbyname = True
                 elif arg == 'r' or arg == '-reverse':
-                      reverse = True
+                    reverse = True
+                elif arg == 'fo' or arg == '-filesonly':
+                    files_only = True
+                elif arg == 'do' or arg == '-directoriesonly':
+                    directories_only = True
                 else:
                     help = True
             else:
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, directories_only=directories_only)
     return (flags, pwd)
 
 
