@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 from os.path import exists, join
 from os import walk, getcwd
-from subprocess import check_output
 from sys import argv
 from dataclasses import dataclass
 
