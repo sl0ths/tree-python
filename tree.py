@@ -3,6 +3,7 @@ from os.path import exists, join
 from os import walk
 from subprocess import check_output
 from sys import argv
+from dataclasses import dataclass
 
 
 v_pipe = '│'
@@ -11,10 +12,11 @@ final_node = '└'
 h_pipe = '──'
 
 
+@dataclass
 class flag:
-    all = False
-    gitignore = False
-    help = False
+    all: bool = False
+    gitignore: bool = False
+    help: bool = False
 
     def __init__(self, **kwargs):
         """Sets all values once given
