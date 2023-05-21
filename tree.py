@@ -20,6 +20,7 @@ class flag:
     directories_only = False
     files_only = False
     filesfirst = False
+    depth = 0
 
     def __init__(self, **kwargs):
         """Sets all values once given
@@ -82,7 +83,7 @@ def tree(pwd, flags: flag):
          print_help()
          return
     print('.')
-    def _tree(pwd, arr):
+    def _tree(pwd, arr, depth):
         if not exists(pwd):
             print("path doesn't exist")
             return
@@ -96,6 +97,7 @@ def tree(pwd, flags: flag):
         lslen = len(ls)
         arr += [[mid_node, h_pipe]]
 
+        depth += 1
         for i in range(lslen):
             if i >= lslen-1:
                 arr[-1][0] = final_node
@@ -105,15 +107,17 @@ def tree(pwd, flags: flag):
             else:
                 printarr(arr)
                 print(ls[i][1])
-                if i < lslen-1:
-                    _tree(pwd + '/' + ls[i][1], arr[:-1] + [[v_pipe, "   "]])
-                else:
-                    _tree(pwd + '/' + ls[i][1], arr[:-1] + [[" ", "   "]])
-    _tree(pwd, [])
+                if flags.depth == 0 or depth < flags.depth:
+                    if i < lslen-1:
+                        _tree(pwd + '/' + ls[i][1], arr[:-1] + [[v_pipe, "   "]], depth)
+                    else:
+                        _tree(pwd + '/' + ls[i][1], arr[:-1] + [[" ", "   "]], depth)
+    _tree(pwd, [], depth = 0)
 
 
 def parse_args(argv: list, pwd: str):
     all, gitignore, help, sortbyname, reverse, files_only, directories_only, filesfirst = False, False, False, False, False, False, False, False
+    depth = 0
     is_pwd_set = False
     if len(argv) <= 1:
         pass
@@ -135,13 +139,15 @@ def parse_args(argv: list, pwd: str):
                     files_only = True
                 elif arg == 'do' or arg == '-directoriesonly':
                     directories_only = True
+                elif arg.startswith('L'):  # this has to be used like this: tree -L5 with the number directly next to the arg no space
+                    depth = int(arg[1:])
                 elif arg == 'h' or arg == '-help':
                     help = True
             else:
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
                     is_pwd_set = True
-    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, directories_only=directories_only)
+    flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, directories_only=directories_only, depth=depth)
     return (flags, pwd)
 
 def print_help():
@@ -166,6 +172,7 @@ Options:
   -r,  --reverse            Sort files by name in reverse.
   -fo, --filesonly          Only show files.
   -do, --directoriesonly    Only show directories
+  -L                        Max depth the directory tree reaches.
   -h,  --help               Show this help message and exit.
 
   All Rights Reserved
