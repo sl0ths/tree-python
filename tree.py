@@ -167,6 +167,7 @@ Options:
   -r,  --reverse            Sort files by name in reverse.
   -fo, --filesonly          Only show files.
   -do, --directoriesonly    Only show directories
+  -L level                  Max depth reached.
   -h,  --help               Show this help message and exit.
 
   All Rights Reserved
