@@ -71,11 +71,9 @@ class TestParseTree(unittest.TestCase):
         test parse args sortbyname in reverse
         """
         argv = ['tree.py', '-r']
-        # -, '-] removr  this i cant cuz phone
         pwd = ""
         result = tree.parse_args(argv, pwd)
         flags = tree.Flag(sortbyname=True, reverse=True)
-        # flags = tree.Flag()
         wanted = (flags, "")
         self.assertEqual(wanted, result)
 
@@ -106,10 +104,10 @@ class TestParseTree(unittest.TestCase):
         test parse args depth
         """
         depth = 1
-        argv = ['tree.py', '-L'+str(depth,)]
+        argv = ['tree.py', '-L'+str(depth)]
         pwd = ""
         result = tree.parse_args(argv, pwd)
-        flags = tree.Flag(depth=depth)  # same here ,
+        flags = tree.Flag(depth=depth)
         wanted = (flags, "")
         self.assertEqual(wanted, result)
 
