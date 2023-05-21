@@ -15,6 +15,7 @@ class flag:
     all = False
     gitignore = False
     sortbyname = False
+    reverse = False
     help = False
     directories_only = False
     files_only = False
@@ -87,8 +88,11 @@ def tree(pwd, flags: flag):
             return
         ls = parse_ls(pwd, flags)
         if flags.sortbyname:
-             # sort list by name
-             ls = sorted(ls, key=lambda x: x[1])
+            # sort list by name
+            if flags.reverse:
+                ls = sorted(ls, key=lambda x: x[1], reverse=True)
+            else:
+                ls = sorted(ls, key=lambda x: x[1])
         lslen = len(ls)
         arr += [[mid_node, h_pipe]]
 
