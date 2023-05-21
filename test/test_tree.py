@@ -1,8 +1,14 @@
+"""
+Testing parse args function 
+"""
 import unittest
 from os.path import join
 import tree
 
 class TestParseTree(unittest.TestCase):
+    """
+    Test Parse Tree
+    """
     def test_parse_args_no_args(self):
         """
         test parse args no args
