@@ -78,28 +78,7 @@ def printarr(array):
 def tree(pwd, flags: flag):
     if flags.help:
          # basic help prinitng here
-         print(r"""
-
-                                         
-                                         
-                                        
-    #                                    
-   ##                                    
-   ##                                    
- ######## ###  /###     /##       /##    
-########   ###/ #### / / ###     / ###   
-   ##       ##   ###/ /   ###   /   ###  
-   ##       ##       ##    ### ##    ### 
-   ##       ##       ########  ########  
-   ##       ##       #######   #######   
-   ##       ##       ##        ##        
-   ##       ##       ####    / ####    / 
-   ##       ###       ######/   ######/  
-    ##       ###       #####     #####   
-                                         
-                                         
-                                         
-          """)
+         print_help()
          return
     print('.')
     def _tree(pwd, arr):
@@ -152,7 +131,7 @@ def parse_args(argv: list, pwd: str):
                     files_only = True
                 elif arg == 'do' or arg == '-directoriesonly':
                     directories_only = True
-                else:
+                elif arg == 'h' or arg == '-help':
                     help = True
             else:
                 if not is_pwd_set:
@@ -160,6 +139,40 @@ def parse_args(argv: list, pwd: str):
                     is_pwd_set = True
     flags = flag(all=all, gitignore=gitignore, sortbyname=sortbyname, help=help, reverse=reverse, files_only=files_only, directories_only=directories_only)
     return (flags, pwd)
+
+def print_help():
+    print(r"""
+                                  
+  _____      ____     U _____ u U _____ u 
+ |_ " _|  U |  _"\ u  \| ___"|/ \| ___"|/ 
+   | |     \| |_) |/   |  _|"    |  _|"   
+  /| |\     |  _ <     | |___    | |___   
+ u |_|U     |_| \_\    |_____|   |_____|  
+ _// \\_    //   \\_   <<   >>   <<   >>  
+(__) (__)  (__)  (__) (__) (__) (__) (__) .py 
+
+A tree(1) clone written in Python.
+                                         
+Usage: tree.py [options] [directory]
+
+Options:
+  -a,  --all                Include hidden files
+  -gitignore                Exclude files listed in .gitignore.
+  -sn, --sortbyname         Sort files by name.
+  -r,  --reverse            Sort files by name in reverse.
+  -fo, --filesonly          Only show files.
+  -do, --directoriesonly    Only show directories
+  -h,  --help               Show this help message and exit.
+
+  All Rights Reserved
+  If you have any questions, or you need help please contact the developers:
+    
+    
+    
+    
+    
+     
+""")
 
 
 if __name__ == "__main__":
