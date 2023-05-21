@@ -186,6 +186,7 @@ def parse_args(argv_list: list, pwd: str):
                 elif arg in ('sn', '-sortbyname'):
                     sortbyname = True
                 elif arg in ('r', '-reverse'):
+                    sortbyname = True
                     reverse = True
                 elif arg in ('fo', '-filesonly'):
                     files_only = True
