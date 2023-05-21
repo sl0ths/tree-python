@@ -133,7 +133,6 @@ def parse_args(argv: list, pwd: str):
                     directories_only = True
                 elif arg == 'h' or arg == '-help':
                     help = True
-                    exit(0)
             else:
                 if not is_pwd_set:
                     pwd = join(pwd, arg)
@@ -144,23 +143,17 @@ def parse_args(argv: list, pwd: str):
 def print_help():
     print(r"""
                                   
-    #                                    
-   ##                                    
-   ##                                    
- ######## ###  /###     /##       /##    
-########   ###/ #### / / ###     / ###   
-   ##       ##   ###/ /   ###   /   ###  
-   ##       ##       ##    ### ##    ### 
-   ##       ##       ########  ########  
-   ##       ##       #######   #######   
-   ##       ##       ##        ##        
-   ##       ##       ####    / ####    / 
-   ##       ###       ######/   ######/  
-    ##       ###       #####     #####   
-                                         
+  _____      ____     U _____ u U _____ u 
+ |_ " _|  U |  _"\ u  \| ___"|/ \| ___"|/ 
+   | |     \| |_) |/   |  _|"    |  _|"   
+  /| |\     |  _ <     | |___    | |___   
+ u |_|U     |_| \_\    |_____|   |_____|  
+ _// \\_    //   \\_   <<   >>   <<   >>  
+(__) (__)  (__)  (__) (__) (__) (__) (__) .py 
+ 
                                          
 Usage: tree [options] [directory]
-Hello , this is a tree command for linux written in python3.
+Hello , this is a tree command for Linux written in python3.
 how to use:
 Options:
   -a, --all          Include hidden files.
@@ -168,7 +161,7 @@ Options:
   -sn, --sortbyname  Sort files by name.
   -h, --help         Show this help message and exit.
   All Rights Reserved 
-  If you have any questions, or youn need help please contact Devolopers.
+  If you have any questions, or you need help please contact Developers.
   
   
   
