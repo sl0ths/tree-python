@@ -150,24 +150,28 @@ def print_help():
  u |_|U     |_| \_\    |_____|   |_____|  
  _// \\_    //   \\_   <<   >>   <<   >>  
 (__) (__)  (__)  (__) (__) (__) (__) (__) .py 
- 
+
+A tree(1) clone written in Python.
                                          
-Usage: tree [options] [directory]
-Hello , this is a tree command for Linux written in python3.
-how to use:
+Usage: tree.py [options] [directory]
+
 Options:
-  -a, --all          Include hidden files.
-  -gitignore         Exclude files listed in .gitignore.
-  -sn, --sortbyname  Sort files by name.
-  -h, --help         Show this help message and exit.
-  All Rights Reserved 
-  If you have any questions, or you need help please contact Developers.
-  Ahmed Merimi
-  Benlmoaujoud Mohamed
-  Yassine Ibrahimi
-  Abdullah Ouaggane
-  Mouslim Mouden
-  Adam El Berdai 
+  -a,  --all                Include hidden files
+  -gitignore                Exclude files listed in .gitignore.
+  -sn, --sortbyname         Sort files by name.
+  -r,  --reverse            Sort files by name in reverse.
+  -fo, --filesonly          Only show files.
+  -do, --directoriesonly    Only show directories
+  -h,  --help               Show this help message and exit.
+
+  All Rights Reserved
+  If you have any questions, or you need help please contact the developers:
+    Ahmed Merimi
+    Benlmoaujoud Mohamed
+    Yassine Ibrahimi
+    Abdellah Ouaggane
+    Mouslim Mouden
+    Adam El Berdai 
 """)
 
 
