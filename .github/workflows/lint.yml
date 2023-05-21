@@ -1,0 +1,28 @@
+name: Lint
+
+on:
+  push:
+
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  linters:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python environement
+        uses: actions/setup-python@v3
+
+      # For now we don't have any requirements
+      # - name: Install requirement
+      #   run: pip install --quiet --requirement requirements.txt
+
+      - name: Install requirement
+        run: pip install pylint
+
+      - name: Run Linter check
+        run: |
+          pylint **/*.py ./*.py
