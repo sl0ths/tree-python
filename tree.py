@@ -24,26 +24,33 @@ class flag:
     depth: int = 0
 
     def __init__(self, **kwargs):
-        """Sets all values once given
+        """
+        Sets all values once given
         whatever is passed in kwargs
         """
         for k, v in kwargs.items():
             object.__setattr__(self, k, v)
 
     def __setattr__(self, *args):
-        """Disables setting attributes via
+        """
+        Disables setting attributes via
         item.prop = val or item['prop'] = val
         """
         raise TypeError(
             'Immutable objects cannot have properties set after init')
 
     def __delattr__(self, *args):
-        """Disables deleting properties"""
+        """
+        Disables deleting properties
+        """
         raise TypeError('Immutable objects cannot have properties deleted')
 
 
 # returns a 2d list of the form [[{is it a directory?}, name],...]
 def parse_ls(pwd, flag):
+    """
+    parse list
+    """
     ls = []
     dirs = []
     files = []
@@ -73,6 +80,9 @@ def parse_ls(pwd, flag):
 
 
 def printarr(array):
+    """
+    print array
+    """
     for i in array:
         for j in i:
             print(j, end='')
@@ -80,6 +90,9 @@ def printarr(array):
 
 
 def tree(pwd, flags: flag):
+    """
+    tree
+    """
     if flags.help:
         # basic help prinitng here
         print_help()
@@ -87,6 +100,9 @@ def tree(pwd, flags: flag):
     print('.')
 
     def _tree(pwd, arr, depth):
+        """
+        _tree
+        """
         if not exists(pwd):
             print("path doesn't exist")
             return
@@ -124,6 +140,9 @@ def tree(pwd, flags: flag):
 
 
 def parse_args(argv: list, pwd: str):
+    """
+    parse args
+    """
     all, gitignore, help, sortbyname, reverse, files_only, dirs_only, filesfirst = False, False, False, False, False, False, False, False
     depth = 0
     is_pwd_set = False
@@ -163,6 +182,9 @@ def parse_args(argv: list, pwd: str):
 
 
 def print_help():
+    """
+    print help
+    """
     print(r"""
 
   _____      ____     U _____ u U _____ u
