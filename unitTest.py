@@ -34,6 +34,14 @@ class TestParseTree(unittest.TestCase):
         flags = tree.flag(all=True)
         wanted = (flags, "")
         self.assertEqual(wanted, result)
+ 
+    def test_parse_args_sortbyname(self):
+        argv = ['tree.py', "--sortbyname"]
+        pwd = ""
+        result = tree.parse_args(argv, pwd)
+        flags = tree.flag(sortbyname=True)
+        wanted = (flags, "")
+        self.assertEqual(wanted, result)
 
 
 if __name__ == '__main__':
