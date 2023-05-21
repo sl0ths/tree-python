@@ -1,6 +1,6 @@
 import unittest
-import tree
 from os.path import join
+import tree
 
 class TestParseTree(unittest.TestCase):
     def test_parse_args_no_args(self):
@@ -34,7 +34,7 @@ class TestParseTree(unittest.TestCase):
         flags = tree.flag(all=True)
         wanted = (flags, "")
         self.assertEqual(wanted, result)
- 
+
     def test_parse_args_sortbyname(self):
         argv = ['tree.py', "--sortbyname"]
         pwd = ""
