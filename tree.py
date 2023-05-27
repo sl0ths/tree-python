@@ -14,12 +14,6 @@ Options:
 
   All Rights Reserved
   If you have any questions, or you need help please contact the developers:
-    
-    
-    
-    
-    
-    
 """
 from os.path import exists, join
 from os import walk, getcwd
@@ -238,12 +232,6 @@ Options:
 
   All Rights Reserved
   If you have any questions, or you need help please contact the developers:
-    
-    
-    
-    
-    
-    
 """)
 
 
