@@ -1,10 +1,6 @@
-"""
-Testing parse args function
-"""
 import unittest
 from os.path import join
 import tree
-
 
 class TestParseTree(unittest.TestCase):
     """
@@ -55,62 +51,27 @@ class TestParseTree(unittest.TestCase):
         wanted = (flags, "")
         self.assertEqual(wanted, result)
 
-    def test_parse_args_sortbyname(self):
+    def test_parse_args_multiple_scenarios(self):
         """
-        test parse args sortbyname
+        Test multiple parse args scenarios
         """
-        argv = ['tree.py', "--sortbyname"]
-        pwd = ""
-        result = tree.parse_args(argv, pwd)
-        flags = tree.Flag(sortbyname=True)
-        wanted = (flags, "")
-        self.assertEqual(wanted, result)
+        test_cases = [
+            ("no_args", ['tree.py'], "", tree.Flag(), ""),
+            ("with_dir", ['tree.py', "dir"], "", tree.Flag(), "dir"),
+            ("gitignore", ['tree.py', "--gitignore"], "", tree.Flag(gitignore=True), ""),
+            ("all", ['tree.py', "--all"], "", tree.Flag(all=True), ""),
+            ("sortbyname", ['tree.py', "--sortbyname"], "", tree.Flag(sortbyname=True), ""),
+            ("sortbyname_reverse", ['tree.py', '-r'], "", tree.Flag(sortbyname=True, reverse=True), ""),
+            ("files_only", ['tree.py', '-fo'], "", tree.Flag(files_only=True), ""),
+            ("dirs_only", ['tree.py', '-do'], "", tree.Flag(dirs_only=True), ""),
+            ("depth", ['tree.py', '-L1'], "", tree.Flag(depth=1), ""),
+        ]
 
-    def test_parse_args_sortbyname_reverse(self):
-        """
-        test parse args sortbyname in reverse
-        """
-        argv = ['tree.py', '-r']
-        pwd = ""
-        result = tree.parse_args(argv, pwd)
-        flags = tree.Flag(sortbyname=True, reverse=True)
-        wanted = (flags, "")
-        self.assertEqual(wanted, result)
-
-    def test_parse_args_files_only(self):
-        """
-        test parse args files only
-        """
-        argv = ['tree.py', '-fo']
-        pwd = ""
-        result = tree.parse_args(argv, pwd)
-        flags = tree.Flag(files_only=True)
-        wanted = (flags, "")
-        self.assertEqual(wanted, result)
-
-    def test_parse_args_dirsonly(self):
-        """
-        test parse args dirsonly
-        """
-        argv = ['tree.py', '-do']
-        pwd = ""
-        result = tree.parse_args(argv, pwd)
-        flags = tree.Flag(dirs_only=True)
-        wanted = (flags, "")
-        self.assertEqual(wanted, result)
-
-    def test_parse_args_depth(self):
-        """
-        test parse args depth
-        """
-        depth = 1
-        argv = ['tree.py', '-L'+str(depth)]
-        pwd = ""
-        result = tree.parse_args(argv, pwd)
-        flags = tree.Flag(depth=depth)
-        wanted = (flags, "")
-        self.assertEqual(wanted, result)
-
+        for name, argv, pwd, expected_flags, expected_dir in test_cases:
+            with self.subTest(name=name):
+                result = tree.parse_args(argv, pwd)
+                wanted = (expected_flags, join(pwd, expected_dir) if expected_dir else "")
+                self.assertEqual(wanted, result)
 
 if __name__ == '__main__':
     unittest.main()
